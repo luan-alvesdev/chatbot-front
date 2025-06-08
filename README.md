@@ -34,7 +34,7 @@ Este projeto é uma aplicação web desenvolvida em Vue 3 + Vite, com um dashboa
 Clone o repositório e instale as dependências:
 
 ```sh
-# git clone https://github.com/seu-usuario/novo-frontChatbot.git
+git clone https://gitlab.com/luan-alvesdev/chatbot
 cd novo-frontChatbot
 npm install
 ```
