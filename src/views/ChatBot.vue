@@ -99,7 +99,7 @@ function enviarDuvida(duvida: boolean) {
 </script>
 
 <template>
-    <div class="min-h-screen flex items-center justify-center bg-gray-200">
+    <div class="min-h-screen flex items-center justify-center">
         <div class="relative">
             <div
                 class="absolute inset-0 translate-x-3 translate-y-3 bg-green-300 rounded-2xl blur-[2px] opacity-60 z-0">
@@ -108,7 +108,7 @@ function enviarDuvida(duvida: boolean) {
             <!-- Pop up de feedback sobre informação da base de conhecimento -->
             <div class="relative font-dm max-w-lg mx-auto mt-3 p-6 bg-white rounded-2xl shadow-2xl z-10">
                 <!-- Pop up -->
-                <div v-if="showPopup" class="fixed inset-0 flex items-center justify-center z-50">
+                <div v-if="showPopup" class="absolute w-full inset-0 flex items-center justify-center z-50">
                     <div
                         class="bg-white border border-green-700 text-green-700 px-8 py-4 rounded-xl shadow-lg text-lg font-semibold">
                         {{ popupMensagem }}
@@ -156,7 +156,8 @@ function enviarDuvida(duvida: boolean) {
                         <div class="flex gap-2">
                             <input type="text" class="w-full border rounded px-3 py-2"
                                 placeholder="Digite sua dúvida aqui..." v-model="duvidaUser">
-                            <button class="p-3 rounded-full bg-green-700 hover:bg-green-500 text-white"
+                            <button
+                                class="p-3 rounded-full text-[0.9rem] bg-green-700 text-white font-bold hover:bg-green-800"
                                 @click="enviarDuvida(true)">
                                 <ArrowUp class="w-5 h-5" />
                             </button>

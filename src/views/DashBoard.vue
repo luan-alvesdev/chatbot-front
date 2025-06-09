@@ -17,13 +17,14 @@ const opcoesTabela = [
   { value: 'duvidas', label: 'Dúvidas' },
 
 ]
-//util
+
+//Dados mocados
 const dadosMock: Record<TableKey, Funcionario[] | Solucao[] | Duvida[]> = {
   pendentes: [
-    { id: 1, cargo: 'Admin', nome: 'Carlos Silva', cpf: '123.456.789-00', email: 'carlos.silva@email.com', senha: '********' },
-    { id: 2, cargo: 'Usuário', nome: 'Ana Paula Souza', cpf: '987.654.321-00', email: 'ana.souza@email.com', senha: '********' },
-    { id: 3, cargo: 'Supervisor', nome: 'João Pedro Lima', cpf: '456.789.123-00', email: 'joao.lima@email.com', senha: '********' },
-    { id: 4, cargo: 'Gerente', nome: 'Mariana Oliveira', cpf: '321.654.987-00', email: 'mariana.oliveira@email.com', senha: '********' }],
+    { id: 1, cargo: 'Admin', nome: 'Mariana Oliveira', cpf: '123.456.789-00', email: 'carlos.silva@email.com', senha: '********' },
+    { id: 2, cargo: 'Atendimento', nome: 'Ana Paula Souza', cpf: '987.654.321-00', email: 'ana.souza@email.com', senha: '********' },
+    { id: 3, cargo: 'Atendimento', nome: 'João Pedro Lima', cpf: '456.789.123-00', email: 'joao.lima@email.com', senha: '********' },
+    { id: 4, cargo: 'Atendimento', nome: 'Carlos Silva', cpf: '321.654.987-00', email: 'mariana.oliveira@email.com', senha: '********' }],
   solucoes: [
     {
       id: 1, titulo: 'Trocas e devoluções', descricao: `Conforme o Código de Defesa do Consumidor (CDC), o prazo para solicitar a troca ou devolução de um pedido feito online é de até 7 (sete) dias corridos a partir da data de entrega no endereço ou retirada do produto na loja.<br>
@@ -91,7 +92,7 @@ const dadosMock: Record<TableKey, Funcionario[] | Solucao[] | Duvida[]> = {
 
   ],
   funcionarios: [
-    { id: 1, cargo: 'Admin', nome: 'Carlos Silva', cpf: '123.456.789-00', email: 'carlos.silva@email.com', senha: '********' },
+    { id: 1, cargo: 'Admin', nome: 'Carlos Rafael', cpf: '123.456.789-00', email: 'carlos.rafael@email.com', senha: '********' },
     { id: 2, cargo: 'Admin', nome: 'Renata Lima', cpf: '987.654.321-11', email: 'renata.lima@email.com', senha: '*******' },
     { id: 3, cargo: 'Atendimento', nome: 'Marcos Souza', cpf: '456.789.123-22', email: 'marcos.souza@email.com', senha: '*******' },
     { id: 4, cargo: 'Atendimento', nome: 'Juliana Rocha', cpf: '321.654.987-33', email: 'juliana.rocha@email.com', senha: '******' },
@@ -106,21 +107,23 @@ const dadosMock: Record<TableKey, Funcionario[] | Solucao[] | Duvida[]> = {
   ],
 
 }
+
 //tabela padrão selecionada
 const tabelaSelecionada = ref<TableKey>('solucoes')
 const filtroId = ref('')
+
 //dados dashboard
 const data = ref<Solucao[] | Duvida[] | Funcionario[]>(dadosMock['solucoes'] as Solucao[])
+
 //criando valores reativos
 const dadosFuncionariosComPendentes = computed(() => {
-  // Adiciona uma flag "pendente" nos pendentes
+  // Une os arrays de pendentes e funcionarios
   const pendentes = (dadosMock.pendentes as Funcionario[]).map(f => ({ ...f, pendente: true }))
   const funcionarios = (dadosMock.funcionarios as Funcionario[]).map(f => ({ ...f, pendente: false }))
   return [...pendentes, ...funcionarios]
 })
 const dadosSolucoes = computed(() => tabelaSelecionada.value === 'solucoes' ? data.value as Solucao[] : [])
-const dadosduvidas = computed(() => tabelaSelecionada.value === 'duvidas' ? data.value as Duvida[] : [])
-
+const dadosDuvidas = computed(() => tabelaSelecionada.value === 'duvidas' ? data.value as Duvida[] : [])
 
 function trocarTabela(e: Event) {
   const value = (e.target as HTMLSelectElement).value as TableKey
@@ -153,7 +156,7 @@ function trocarTabela(e: Event) {
         <h3 class="text-lg font-bold text-green-700 mb-3">Filtro</h3>
         <div class="flex gap-3">
           <input type="text" class="border rounded px-3 py-2 flex-1" placeholder="Pesquise aqui" v-model="filtroId" />
-          <button class="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-500 font-medium">
+          <button class="text-[0.9rem] px-10 py-2 rounded bg-green-700 text-white font-bold hover:bg-green-800">
             Consultar
           </button>
         </div>
@@ -166,7 +169,7 @@ function trocarTabela(e: Event) {
       <div>
         <FuncionariosChart v-if="tabelaSelecionada === 'funcionarios'" :data="dadosFuncionariosComPendentes" />
         <SolucoesChart v-else-if="tabelaSelecionada === 'solucoes'" :data="dadosSolucoes" />
-        <DuvidasChart v-else-if="tabelaSelecionada === 'duvidas'" :data="dadosduvidas" />
+        <DuvidasChart v-else-if="tabelaSelecionada === 'duvidas'" :data="dadosDuvidas" />
       </div>
     </div>
   </div>

@@ -69,6 +69,8 @@ function saveEdit(row: Solucao) {
             <label class="block font-medium text-green-700 mb-1">Palavras-chave:</label>
             <input v-model="novaSolucao.palavrasChave" type="text" class="w-full border rounded px-3 py-2" />
         </div>
+        <label class="block text-sm mb-1 font-bold text-green-700">Anexar PDF</label>
+        <input type="file" accept="application/pdf" class="w-full border rounded px-3 py-2 mb-3 border-green-500" />
         <button class="bg-green-700 text-white px-4 py-2 rounded font-semibold hover:bg-green-800 transition"
             @click="enviarSolucao">
             Enviar
