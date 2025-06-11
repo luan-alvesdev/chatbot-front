@@ -129,7 +129,7 @@ function enviarDuvida(duvida: boolean) {
                     <img src="/avatar_woman.png" alt="Avatar" class="h-12 w-12 rounded-full object-cover" />
                     <div class="flex flex-col justify-center">
                         <h1 class="text-2xl font-bold text-green-700">
-                            Base de Conhecimento QQTech
+                            Atendimento com IA QQTech
                         </h1>
                         <span class="text-sm text-green-700">Assistente E-commerce</span>
                     </div>
@@ -175,7 +175,7 @@ function enviarDuvida(duvida: boolean) {
                     <!-- Coleta se a info foi util ou não -->
                     <div class="sticky bottom-0 bg-gray-100" v-if="selected">
                         <div class="font-medium text-gray-700 mb-2 mt-2 flex justify-end">
-                            As informações foram úteis?
+                            Foi útil?
                         </div>
                         <div class="flex justify-end gap-4">
                             <button

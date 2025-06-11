@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ChatBotNovo from '../views/ChatBot.vue'
-import DashBoard from '../views/DashBoard.vue'
 import NaoAutorizado from '@/views/NaoAutorizado.vue'
 import HomeChat from '@/views/HomeChat.vue'
 import { useAuthStore } from '@/stores/autenticacao'
+import BaseDeConhecimento from '@/components/charts/BaseDeConhecimento.vue'
+import BaseDuvidas from '@/components/charts/BaseDuvidas.vue'
+import BaseFuncionarios from '@/components/charts/BaseFuncionarios.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,9 +28,21 @@ const router = createRouter({
       meta: { requiresAuth: true, roles: ['admin', 'atendente'] },
     },
     {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: DashBoard,
+      path: '/basedeconhecimento',
+      name: 'basedeconhecimento',
+      component: BaseDeConhecimento,
+      meta: { requiresAuth: true, roles: ['admin'] },
+    },
+    {
+      path: '/basededuvidas',
+      name: 'basededuvidas',
+      component: BaseDuvidas,
+      meta: { requiresAuth: true, roles: ['admin'] },
+    },
+    {
+      path: '/basedefuncionarios',
+      name: 'basedefuncionarios',
+      component: BaseFuncionarios,
       meta: { requiresAuth: true, roles: ['admin'] },
     },
   ],

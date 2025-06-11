@@ -12,7 +12,7 @@ watch(
   () => auth.isLoggedIn,
   (loggedIn) => {
     if (loggedIn) {
-      router.push('/dashboard')
+      router.push('/basedeconhecimento')
     }
   }
 )
@@ -24,7 +24,7 @@ watch(
     <!-- Sidebar sempre visível em desktop, oculto em mobile -->
     <MenuHamburguer v-if="auth.isLoggedIn" />
     <!-- Conteúdo principal -->
-    <div :class="['flex-1 px-6', auth.isLoggedIn ? 'md:ml-64' : '']">
+    <div :class="['flex-1 px-6', auth.isLoggedIn ? 'lg:ml-64' : '']">
       <RouterView />
     </div>
   </div>

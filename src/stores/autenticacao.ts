@@ -7,6 +7,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   function login() {
     // atendente
+    //admin
     roles.value = 'admin'
     isLoggedIn.value = true
   }
