@@ -6,6 +6,7 @@ import { useAuthStore } from '@/stores/autenticacao'
 import BaseDeConhecimento from '@/components/charts/BaseDeConhecimento.vue'
 import BaseDuvidas from '@/components/charts/BaseDuvidas.vue'
 import BaseFuncionarios from '@/components/charts/BaseFuncionarios.vue'
+import DashboardGraph from '@/views/DashboardGraph.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -37,6 +38,12 @@ const router = createRouter({
       path: '/basededuvidas',
       name: 'basededuvidas',
       component: BaseDuvidas,
+      meta: { requiresAuth: true, roles: ['admin'] },
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashboardGraph,
       meta: { requiresAuth: true, roles: ['admin'] },
     },
     {

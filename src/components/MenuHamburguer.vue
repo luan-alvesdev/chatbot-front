@@ -61,9 +61,6 @@ function realizarLogout() {
 
       <!-- Opções de menu -->
       <div class="flex flex-col gap-4 px-4">
-        <!-- <router-link v-if="auth.roles == 'admin'" to="/dashboard"
-          class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-green-800 hover:bg-green-100 transition"
-          active-class="underline text-green-900 bg-green-50">Dashboard</router-link> -->
         <router-link v-if="auth.roles == 'admin' || auth.roles == 'atendente'" to="/chatbot"
           class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-green-800 hover:bg-green-100 transition"
           active-class="underline text-green-900 bg-green-50">Chatbot</router-link>
@@ -73,6 +70,9 @@ function realizarLogout() {
         <router-link v-if="auth.roles == 'admin'" to="/basededuvidas"
           class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-green-800 hover:bg-green-100 transition"
           active-class="underline text-green-900 bg-green-50">Assuntos não listados</router-link>
+        <router-link v-if="auth.roles == 'admin'" to="/dashboard"
+          class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-green-800 hover:bg-green-100 transition"
+          active-class="underline text-green-900 bg-green-50">Dashboard</router-link>
         <router-link v-if="auth.roles == 'admin'" to="/basedefuncionarios"
           class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-green-800 hover:bg-green-100 transition"
           active-class="underline text-green-900 bg-green-50">Funcionarios</router-link>
