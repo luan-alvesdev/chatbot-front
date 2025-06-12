@@ -122,7 +122,7 @@ const tagColors = [
 
 <template>
     <div
-        class="w-full max-w-screen-2xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 p-4 md:p-10 mt-8 mb-8 px-2 sm:px-4">
+        class="w-full max-w-screen-2xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 p-4 md:p-10 mt-8 mb-8">
         <!-- Título centralizado -->
         <h1 class="text-2xl font-extrabold mb-6 text-green-700 text-center tracking-tight">Assuntos não listados</h1>
         <!-- Filtro -->
