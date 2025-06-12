@@ -132,39 +132,121 @@ function saveEdit(row: Funcionario) {
 
 </script>
 <template>
-    <div v-if="popUpEdicao"
-        class="fixed top-16 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-6 py-3 rounded shadow-lg z-50 transition">
-        Edição salva com sucesso.
-    </div>
-    <div v-if="popUpAprovacao"
-        class="fixed top-20 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded shadow-lg z-50 transition">
-        {{ nomeAprovado }} foi aprovado(a) com sucesso.
-    </div>
-    <div v-if="popUpRemocao"
-        class="fixed top-8 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-6 py-3 rounded shadow-lg z-50 transition">
-        {{ nomeRemovido }} foi removido(a) com sucesso.
-    </div>
+    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-8 px-2">
+        <div class="w-full max-w-5xl bg-white rounded-2xl shadow-xl border border-gray-200 p-6 md:p-10 relative">
+            <!-- Pop-ups -->
+            <div class="space-y-2 z-50">
+                <div v-if="popUpEdicao"
+                    class="fixed top-8 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-16 py-4 min-w-[400px] max-w-[90vw] rounded shadow-lg z-50 transition">
+                    Edição salva com sucesso.
+                </div>
+                <div v-if="popUpAprovacao"
+                    class="fixed top-24 left-1/2 -translate-x-1/2 bg-green-600 text-white px-16 py-4 min-w-[400px] max-w-[90vw] rounded shadow-lg z-50 transition">
+                    {{ nomeAprovado }} foi aprovado(a) com sucesso.
+                </div>
+                <div v-if="popUpRemocao"
+                    class="fixed top-40 left-1/2 -translate-x-1/2 bg-red-600 text-white px-16 py-4 min-w-[400px] max-w-[90vw] rounded shadow-lg z-50 transition">
+                    {{ nomeRemovido }} foi removido(a) com sucesso.
+                </div>
+            </div>
 
-    <h1 class="text-xl font-bold mb-2 text-green-700">Funcionários</h1>
-    <!-- tabelas modo desktop -->
-    <div class="overflow-x-auto hidden md:block">
-        <table class="min-w-full mt-4 border rounded text-center">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="px-4 py-2 font-bold">ID</th>
-                    <th class="px-4 py-2 font-bold">Cargo</th>
-                    <th class="px-4 py-2 font-bold">Nome</th>
-                    <th class="px-4 py-2 font-bold">CPF</th>
-                    <th class="px-4 py-2 font-bold">E-mail</th>
-                    <!-- <th class="px-4 py-2 font-bold">Senha</th> -->
-                    <th class="px-4 py-2 font-bold">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="c in dadosFuncionariosComPendentes" :key="c.id"
-                    :class="['border-t', c.pendente ? 'bg-red-100' : '']">
-                    <td class="px-4 py-2">{{ c.id }}</td>
-                    <td class="px-4 py-2">
+            <h1 class="text-2xl font-extrabold mb-6 text-green-700 text-center tracking-tight">Funcionários</h1>
+            <!-- tabelas modo desktop -->
+            <div class="overflow-x-auto hidden md:block">
+                <table class="min-w-full mt-4 border rounded text-center">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="px-4 py-2 font-bold">ID</th>
+                            <th class="px-4 py-2 font-bold">Cargo</th>
+                            <th class="px-4 py-2 font-bold">Nome</th>
+                            <th class="px-4 py-2 font-bold">CPF</th>
+                            <th class="px-4 py-2 font-bold">E-mail</th>
+                            <!-- <th class="px-4 py-2 font-bold">Senha</th> -->
+                            <th class="px-4 py-2 font-bold">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="c in dadosFuncionariosComPendentes" :key="c.id"
+                            :class="['border-t', c.pendente ? 'bg-red-100' : '']">
+                            <td class="px-4 py-2">{{ c.id }}</td>
+                            <td class="px-4 py-2">
+                                <template v-if="editingId === c.id && !c.pendente">
+                                    <select v-model="editRow.cargo" class="border rounded px-2 py-1 w-full">
+                                        <option value="Admin">Admin</option>
+                                        <option value="Atendimento">Atendente</option>
+                                    </select>
+                                </template>
+                                <template v-else>
+                                    {{ c.cargo }}
+                                </template>
+                            </td>
+                            <td class="px-4 py-2">
+                                <template v-if="editingId === c.id && !c.pendente">
+                                    <input v-model="editRow.nome" class="border rounded px-2 py-1 w-full" />
+                                </template>
+                                <template v-else>
+                                    {{ c.nome }}
+                                </template>
+                            </td>
+                            <td class="px-4 py-2">
+                                <template v-if="editingId === c.id && !c.pendente">
+                                    <input v-model="editRow.cpf" class="border rounded px-2 py-1 w-full" />
+                                </template>
+                                <template v-else>
+                                    {{ c.cpf }}
+                                </template>
+                            </td>
+                            <td class="px-4 py-2">
+                                <template v-if="editingId === c.id && !c.pendente">
+                                    <input v-model="editRow.email" class="border rounded px-2 py-1 w-full" />
+                                </template>
+                                <template v-else>
+                                    {{ c.email }}
+                                </template>
+                            </td>
+                            <td class="px-4 py-2 flex items-center justify-center gap-2">
+                                <template v-if="c.pendente">
+                                    <button @click="aprovarFuncionario(c.id)" title="Aprovar">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Aprovar"
+                                            class="w-6 h-6" />
+                                    </button>
+
+                                    <button @click="removerFuncionario(c.id, c.pendente)" title="Reprovar">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
+                                            alt="Reprovar" class="w-6 h-6" />
+                                    </button>
+
+                                </template>
+                                <template v-else>
+                                    <button v-if="editingId !== c.id" @click="startEdit(c)" title="Editar">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/84/84380.png" alt="Editar"
+                                            class="w-6 h-6 inline" />
+                                    </button>
+                                    <button v-else @click="saveEdit(c)" title="Salvar">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/11251/11251859.png"
+                                            alt="Salvar" class="w-6 h-6 inline" />
+                                    </button>
+                                    <!-- Ícone de X para remover funcionário não pendente -->
+                                    <button @click="removerFuncionario(c.id, c.pendente)" title="Remover" class="ml-2">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Remover"
+                                            class="w-6 h-6" />
+                                    </button>
+
+                                </template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- tabelas modo responsivo  -->
+            <div class="grid gap-4 md:hidden">
+                <div v-for="c in dadosFuncionariosComPendentes" :key="c.id"
+                    :class="['border-2 rounded-xl p-4 bg-white shadow flex flex-col gap-2', c.pendente ? 'border-red-400 bg-red-50' : 'border-green-900']">
+                    <div>
+                        <span class="font-bold text-green-900">ID:</span> {{ c.id }}
+                    </div>
+                    <div>
+                        <span class="font-bold text-green-900">Cargo:</span>
                         <template v-if="editingId === c.id && !c.pendente">
                             <select v-model="editRow.cargo" class="border rounded px-2 py-1 w-full">
                                 <option value="Admin">Admin</option>
@@ -174,43 +256,44 @@ function saveEdit(row: Funcionario) {
                         <template v-else>
                             {{ c.cargo }}
                         </template>
-                    </td>
-                    <td class="px-4 py-2">
+                    </div>
+                    <div>
+                        <span class="font-bold text-green-900">Nome:</span>
                         <template v-if="editingId === c.id && !c.pendente">
                             <input v-model="editRow.nome" class="border rounded px-2 py-1 w-full" />
                         </template>
                         <template v-else>
                             {{ c.nome }}
                         </template>
-                    </td>
-                    <td class="px-4 py-2">
+                    </div>
+                    <div>
+                        <span class="font-bold text-green-900">CPF:</span>
                         <template v-if="editingId === c.id && !c.pendente">
                             <input v-model="editRow.cpf" class="border rounded px-2 py-1 w-full" />
                         </template>
                         <template v-else>
                             {{ c.cpf }}
                         </template>
-                    </td>
-                    <td class="px-4 py-2">
+                    </div>
+                    <div>
+                        <span class="font-bold text-green-900">E-mail:</span>
                         <template v-if="editingId === c.id && !c.pendente">
                             <input v-model="editRow.email" class="border rounded px-2 py-1 w-full" />
                         </template>
                         <template v-else>
                             {{ c.email }}
                         </template>
-                    </td>
-                    <td class="px-4 py-2 flex items-center justify-center gap-2">
+                    </div>
+                    <div class="flex gap-2 mt-2">
                         <template v-if="c.pendente">
                             <button @click="aprovarFuncionario(c.id)" title="Aprovar">
                                 <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Aprovar"
                                     class="w-6 h-6" />
                             </button>
-
                             <button @click="removerFuncionario(c.id, c.pendente)" title="Reprovar">
                                 <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Reprovar"
                                     class="w-6 h-6" />
                             </button>
-
                         </template>
                         <template v-else>
                             <button v-if="editingId !== c.id" @click="startEdit(c)" title="Editar">
@@ -221,92 +304,22 @@ function saveEdit(row: Funcionario) {
                                 <img src="https://cdn-icons-png.flaticon.com/512/11251/11251859.png" alt="Salvar"
                                     class="w-6 h-6 inline" />
                             </button>
-                            <!-- Ícone de X para remover funcionário não pendente -->
                             <button @click="removerFuncionario(c.id, c.pendente)" title="Remover" class="ml-2">
                                 <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Remover"
                                     class="w-6 h-6" />
                             </button>
-
                         </template>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <!-- tabelas modo responsivo  -->
-    <div class="grid gap-4 md:hidden">
-        <div v-for="c in dadosFuncionariosComPendentes" :key="c.id"
-            :class="['border-2 rounded-xl p-4 bg-white shadow flex flex-col gap-2', c.pendente ? 'border-red-400 bg-red-50' : 'border-green-900']">
-            <div>
-                <span class="font-bold text-green-900">ID:</span> {{ c.id }}
-            </div>
-            <div>
-                <span class="font-bold text-green-900">Cargo:</span>
-                <template v-if="editingId === c.id && !c.pendente">
-                    <select v-model="editRow.cargo" class="border rounded px-2 py-1 w-full">
-                        <option value="Admin">Admin</option>
-                        <option value="Atendimento">Atendente</option>
-                    </select>
-                </template>
-                <template v-else>
-                    {{ c.cargo }}
-                </template>
-            </div>
-            <div>
-                <span class="font-bold text-green-900">Nome:</span>
-                <template v-if="editingId === c.id && !c.pendente">
-                    <input v-model="editRow.nome" class="border rounded px-2 py-1 w-full" />
-                </template>
-                <template v-else>
-                    {{ c.nome }}
-                </template>
-            </div>
-            <div>
-                <span class="font-bold text-green-900">CPF:</span>
-                <template v-if="editingId === c.id && !c.pendente">
-                    <input v-model="editRow.cpf" class="border rounded px-2 py-1 w-full" />
-                </template>
-                <template v-else>
-                    {{ c.cpf }}
-                </template>
-            </div>
-            <div>
-                <span class="font-bold text-green-900">E-mail:</span>
-                <template v-if="editingId === c.id && !c.pendente">
-                    <input v-model="editRow.email" class="border rounded px-2 py-1 w-full" />
-                </template>
-                <template v-else>
-                    {{ c.email }}
-                </template>
-            </div>
-            <div class="flex gap-2 mt-2">
-                <template v-if="c.pendente">
-                    <button @click="aprovarFuncionario(c.id)" title="Aprovar">
-                        <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Aprovar"
-                            class="w-6 h-6" />
-                    </button>
-                    <button @click="removerFuncionario(c.id, c.pendente)" title="Reprovar">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Reprovar"
-                            class="w-6 h-6" />
-                    </button>
-                </template>
-                <template v-else>
-                    <button v-if="editingId !== c.id" @click="startEdit(c)" title="Editar">
-                        <img src="https://cdn-icons-png.flaticon.com/512/84/84380.png" alt="Editar"
-                            class="w-6 h-6 inline" />
-                    </button>
-                    <button v-else @click="saveEdit(c)" title="Salvar">
-                        <img src="https://cdn-icons-png.flaticon.com/512/11251/11251859.png" alt="Salvar"
-                            class="w-6 h-6 inline" />
-                    </button>
-                    <button @click="removerFuncionario(c.id, c.pendente)" title="Remover" class="ml-2">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Remover"
-                            class="w-6 h-6" />
-                    </button>
-                </template>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+@media (min-width: 768px) {
+    .popups-space {
+        margin-top: 2.5rem;
+    }
+}
+</style>
