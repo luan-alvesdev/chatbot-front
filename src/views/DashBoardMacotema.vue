@@ -140,11 +140,12 @@ const tipoGrafico = ref('bar')
 
 <template>
     <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 p-6 mt-8">
-        <h2 class="text-2xl font-bold mb-6 text-indigo-700 text-center">Dashboard de Macrotemas</h2>
+        <h2 class="text-2xl font-bold mb-6 text-indigo-700 text-center">Dashboard de assuntos pesquisados por período
+        </h2>
         <div class="grid grid-cols-1 gap-3 mb-6">
             <!-- Linha 1: Macrotema sozinho -->
             <div class="md:col-span-2">
-                <label class="font-bold text-gray-700 mr-2">Macrotema:</label>
+                <label class="font-bold text-gray-700 mr-2">Macrotemas:</label>
                 <select v-model="macroTemaSelecionado" class="border rounded px-3 py-2 w-full">
                     <option v-for="m in Duvidas" :key="m.id" :value="m.macroTema">{{ m.macroTema }}</option>
                 </select>

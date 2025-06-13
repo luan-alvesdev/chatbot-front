@@ -215,12 +215,13 @@ function voltarParaLogin() {
                             <div class="px-6 sm:px-8">
                                 <template v-if="forgotStep === 1">
                                     <div class="flex flex-col items-center gap-3">
+
                                         <label class="block font-bold text-green-700 text-center">Por favor digite seu
                                             E-mail</label>
                                         <input type="email" v-model="forgotEmail" placeholder="Digite seu e-mail aqui"
                                             class="w-full max-w-xs border rounded px-3 py-2 border-green-500" />
                                         <span v-if="forgotError" class="text-red-500 text-xs text-center">{{ forgotError
-                                        }}</span>
+                                            }}</span>
                                         <!-- Espaço extra antes do botão e frase -->
                                         <div class="w-full flex flex-col items-center mt-4">
                                             <button
@@ -233,6 +234,11 @@ function voltarParaLogin() {
                                                 que você possa recuperar sua senha.
                                             </span>
                                         </div>
+                                        <button
+                                            class="text-green-700 text-xs rounded hover:bg-green-50 transition-colors self-end"
+                                            @click="voltarParaLogin" type="button">
+                                            Voltar
+                                        </button>
                                     </div>
                                 </template>
                                 <template v-else-if="forgotStep === 2">
@@ -248,7 +254,7 @@ function voltarParaLogin() {
                                             @keydown="handleCodeBackspace(idx, $event)" />
                                     </div>
                                     <span v-if="forgotError" class="text-red-500 text-xs mb-2 block">{{ forgotError
-                                    }}</span>
+                                        }}</span>
                                     <div class="flex justify-center">
                                         <button
                                             class="bg-green-700 text-white px-4 py-2 rounded font-bold hover:bg-green-800"
@@ -269,7 +275,7 @@ function voltarParaLogin() {
                                     <input type="password" v-model="forgotPasswordConfirm"
                                         class="w-full border rounded px-3 py-2 mb-3 border-green-500" />
                                     <span v-if="forgotError" class="text-red-500 text-xs mb-2 block">{{ forgotError
-                                    }}</span>
+                                        }}</span>
                                     <div class="flex justify-center">
                                         <button
                                             class="bg-green-700 text-white px-4 py-2 rounded font-bold hover:bg-green-800"
@@ -304,22 +310,22 @@ function voltarParaLogin() {
                         <input id="cadastro-nome" type="text"
                             class="w-full border rounded px-3 py-2 mb-3 border-green-500" v-model="nomeCadastro" />
                         <span v-if="nomeCadastroError" class="text-red-500 text-xs mb-2 block">{{ nomeCadastroError
-                            }}</span>
+                        }}</span>
                         <label class="block text-sm mb-1 font-bold text-green-700">CPF</label>
                         <input type="text" class="w-full border rounded px-3 py-2 mb-3 border-green-500"
                             v-model="cpfCadastro" />
                         <span v-if="cpfCadastroError" class="text-red-500 text-xs mb-2 block">{{ cpfCadastroError
-                            }}</span>
+                        }}</span>
                         <label class="block text-sm mb-1 font-bold text-green-700">E-mail</label>
                         <input type="email" class="w-full border rounded px-3 py-2 mb-3 border-green-500"
                             v-model="emailCadastro" />
                         <span v-if="emailCadastroError" class="text-red-500 text-xs mb-2 block">{{ emailCadastroError
-                            }}</span>
+                        }}</span>
                         <label class="block text-sm mb-1 font-bold text-green-700">Senha</label>
                         <input type="password" class="w-full border rounded px-3 py-2 mb-4 border-green-500"
                             v-model="senhaCadastro" />
                         <span v-if="senhaCadastroError" class="text-red-500 text-xs mb-2 block">{{ senhaCadastroError
-                            }}</span>
+                        }}</span>
                         <label class="block text-sm mb-1 font-bold text-green-700">Cargo</label>
                         <div class="flex gap-4 mb-3">
                             <label class="flex items-center cursor-pointer">
@@ -332,7 +338,7 @@ function voltarParaLogin() {
                             </label>
                         </div>
                         <span v-if="cargoCadastroError" class="text-red-500 text-xs mb-2 block">{{ cargoCadastroError
-                            }}</span>
+                        }}</span>
                         <div class="flex justify-between">
                             <button
                                 class="text-[0.9rem] px-4 py-2 rounded bg-green-700 text-white font-bold hover:bg-green-800"

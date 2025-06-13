@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, nextTick } from 'vue'
 
+// dados mocados
 const baseConhecimento = ref([
     {
         id: 1,
@@ -31,11 +32,11 @@ const baseConhecimento = ref([
         ]
     }
 ])
-
 const macrotemaSelecionado = ref('')
 const microtemaSelecionado = ref('')
-const mensagens = ref<{ texto: string, autor: 'bot' | 'user' }[]>([])
+const mensagens = ref<{ texto: string, autor: 'bot' | 'user', isDescricao?: boolean }[]>([])
 const novaMensagem = ref('')
+const feedbacks = ref<{ index: number, util: boolean }[]>([])
 
 const microtemasDisponiveis = computed(() => {
     const macro = baseConhecimento.value.find(m => m.macroTema === macrotemaSelecionado.value)
@@ -56,6 +57,7 @@ function iniciarChat() {
         }
     ]
     novaMensagem.value = ''
+    feedbacks.value = []
     nextTick(() => {
         const chatDiv = document.getElementById('chat-mensagens')
         if (chatDiv) chatDiv.scrollTop = chatDiv.scrollHeight
@@ -69,7 +71,8 @@ function enviarMensagem() {
         if (microtemaObjSelecionado.value) {
             mensagens.value.push({
                 texto: microtemaObjSelecionado.value.descricao,
-                autor: 'bot'
+                autor: 'bot',
+                isDescricao: true
             })
         }
         nextTick(() => {
@@ -85,6 +88,16 @@ function reiniciarChat() {
     microtemaSelecionado.value = ''
     mensagens.value = []
     novaMensagem.value = ''
+    feedbacks.value = []
+}
+
+function marcarUtil(index: number) {
+    const idx = feedbacks.value.findIndex(f => f.index === index)
+    if (idx === -1) {
+        feedbacks.value.push({ index, util: true })
+    } else {
+        feedbacks.value.splice(idx, 1)
+    }
 }
 </script>
 
@@ -132,7 +145,16 @@ function reiniciarChat() {
                     <div v-for="(msg, idx) in mensagens" :key="idx" class="flex"
                         :class="msg.autor === 'bot' ? 'justify-start' : 'justify-end'">
                         <div v-if="msg.autor === 'bot'"
-                            class="bg-green-100 text-green-900 px-4 py-2 rounded-lg max-w-xs" v-html="msg.texto"></div>
+                            class="bg-green-100 text-green-900 px-4 py-2 rounded-lg max-w-xs flex flex-col">
+                            <span v-html="msg.texto"></span>
+                            <!-- Botão "Foi útil?" discreto, pequeno e abaixo da mensagem -->
+                            <button v-if="msg.isDescricao && idx === mensagens.length - 1" @click="marcarUtil(idx)"
+                                class="self-end mt-2 px-2 py-1 rounded text-xs font-semibold transition-colors"
+                                :class="feedbacks.find(f => f.index === idx) ? 'bg-green-200 text-green-700' : 'bg-green-700 text-white hover:bg-green-800'"
+                                :aria-pressed="!!feedbacks.find(f => f.index === idx)" title="Marcar como útil">
+                                Foi útil?
+                            </button>
+                        </div>
                         <div v-else class="bg-blue-100 text-blue-900 px-4 py-2 rounded-lg max-w-xs">
                             {{ msg.texto }}
                         </div>

@@ -132,11 +132,11 @@ const tipoGrafico = ref('bar')
 
 <template>
     <div class="max-w-3xl mb-8 mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 p-6 mt-8">
-        <h2 class="text-2xl font-bold mb-6 text-green-700 text-center">Dashboard de Microtemas</h2>
+        <!-- <h2 class="text-2xl font-bold mb-6 text-green-700 text-center">Dashboard de Microtemas</h2> -->
         <div class="grid grid-cols-1 gap-3 mb-6">
             <!-- Linha 1: Microtema sozinho -->
             <div class="md:col-span-2">
-                <label class="font-bold text-gray-700 mr-2">Microtema:</label>
+                <label class="font-bold text-gray-700 mr-2">Microtemas:</label>
                 <select v-model="microtemaSelecionado" class="border rounded px-3 py-2 w-full">
                     <option v-for="m in microtemas" :key="m.id" :value="m.nome">{{ m.nome }}</option>
                 </select>
