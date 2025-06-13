@@ -303,7 +303,7 @@ function adicionarNovoMicrotema() {
 <template>
     <div class="w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 p-4 md:p-10 mt-8 mb-8">
         <h1 class="text-2xl font-extrabold mb-6 text-green-700 text-center tracking-tight">
-            Biblioteca de conhecimento
+            Biblioteca do conhecimento
         </h1>
 
         <!-- Select MacroTema -->

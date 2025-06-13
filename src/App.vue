@@ -12,7 +12,7 @@ watch(
   () => auth.isLoggedIn,
   (loggedIn) => {
     if (loggedIn) {
-      router.push('/basedeconhecimento')
+      router.push('/dashboard')
     }
   }
 )

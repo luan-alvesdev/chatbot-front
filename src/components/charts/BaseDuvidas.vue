@@ -306,7 +306,7 @@ function enviarNovoMacrotema() {
     <div
         class="w-full max-w-screen-2xl mx-auto bg-white rounded-2xl shadow-xl border border-gray-200 p-4 md:p-10 mt-8 mb-8 overflow-x-hidden">
         <h1 class="text-2xl font-extrabold mb-6 text-green-700 text-center tracking-tight">
-            Assuntos não listados na Biblioteca de Conhecimento
+            Assuntos não listados na Biblioteca do Conhecimento
         </h1>
         <!-- Filtro -->
         <div class="mb-6 flex gap-3">
@@ -318,7 +318,7 @@ function enviarNovoMacrotema() {
             <button
                 class="flex items-center gap-2 px-4 py-2 rounded bg-green-700 text-white font-bold hover:bg-green-800"
                 @click="showNovoMacroForm = !showNovoMacroForm">
-                + Criar novo macrotema/microtema
+                Criar novo macrotema + microtema
             </button>
         </div>
 
@@ -356,7 +356,7 @@ function enviarNovoMacrotema() {
             </div>
             <div>
                 <label class="font-bold text-green-900 mb-1 text-sm md:text-right">
-                    Gerar novo macrotema através de documento com IA QQ-Tech. 🤖
+                    Gerar novo macrotema + microtema através de documento com IA QQ-Tech. 🤖
                 </label>
                 <input type="file" class="border rounded px-3 py-2 w-full" />
             </div>
