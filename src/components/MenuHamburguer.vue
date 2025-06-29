@@ -61,19 +61,19 @@ function realizarLogout() {
 
       <!-- Opções de menu -->
       <div class="flex flex-col gap-4 px-4">
-        <router-link v-if="auth.roles == 'admin'" to="/dashboard"
+        <router-link v-if="auth.perfilId === 1" to="/dashboard"
           class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-green-800 hover:bg-green-100 transition"
           active-class="underline text-green-900 bg-green-50">Dashboard</router-link>
-        <router-link v-if="auth.roles == 'admin' || auth.roles == 'atendente'" to="/chatbot"
+        <router-link v-if="auth.perfilId === 1 || auth.perfilId === 2" to="/chatbot"
           class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-green-800 hover:bg-green-100 transition"
           active-class="underline text-green-900 bg-green-50">Chatbot IA QQ-Tech</router-link>
-        <router-link v-if="auth.roles == 'admin'" to="/basedeconhecimento"
+        <router-link v-if="auth.perfilId === 1" to="/basedeconhecimento"
           class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-green-800 hover:bg-green-100 transition"
           active-class="underline text-green-900 bg-green-50">Biblioteca do Conhecimento</router-link>
-        <router-link v-if="auth.roles == 'admin'" to="/basededuvidas"
+        <router-link v-if="auth.perfilId === 1" to="/basededuvidas"
           class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-green-800 hover:bg-green-100 transition"
           active-class="underline text-green-900 bg-green-50">Assuntos não listados</router-link>
-        <router-link v-if="auth.roles == 'admin'" to="/basedefuncionarios"
+        <router-link v-if="auth.perfilId === 1" to="/basedefuncionarios"
           class="flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-green-800 hover:bg-green-100 transition"
           active-class="underline text-green-900 bg-green-50">Funcionarios</router-link>
       </div>

@@ -3,18 +3,16 @@ import { ref } from 'vue'
 
 export const useAuthStore = defineStore('auth', () => {
   const isLoggedIn = ref(false)
-  const roles = ref('')
+  const perfilId = ref<number | null>(null) // 1 = admin, 2 = atendente
 
-  function login() {
-    // atendente
-    //admin
-    roles.value = 'admin'
+  function login(perfil: number) {
+    perfilId.value = perfil
     isLoggedIn.value = true
   }
 
   function logout() {
-    roles.value = ''
+    perfilId.value = null
     isLoggedIn.value = false
   }
-  return { isLoggedIn, login, logout, roles }
+  return { isLoggedIn, login, logout, perfilId }
 })

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import DaashBoardMicrotema from './DaashBoardMicrotema.vue';
-import DashBoardMacotema from './DashBoardMacotema.vue';
+import DashBoardMicrotema from '../components/charts/DashBoardMicrotema.vue';
+import DashBoardMacotema from '../components/charts/DashBoardMacotema.vue';
 
 </script>
 
 <template>
   <DashBoardMacotema />
-  <DaashBoardMicrotema />
+  <DashBoardMicrotema />
 </template>

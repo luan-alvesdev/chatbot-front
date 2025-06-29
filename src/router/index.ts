@@ -3,9 +3,9 @@ import ChatBotNovo from '../views/ChatBot.vue'
 import NaoAutorizado from '@/views/NaoAutorizado.vue'
 import HomeChat from '@/views/HomeChat.vue'
 import { useAuthStore } from '@/stores/autenticacao'
-import BaseDeConhecimento from '@/components/charts/BaseDeConhecimento.vue'
-import BaseDuvidas from '@/components/charts/BaseDuvidas.vue'
-import BaseFuncionarios from '@/components/charts/BaseFuncionarios.vue'
+import BaseDeConhecimento from '@/views/BaseDeConhecimento.vue'
+import BaseDuvidas from '@/views/BaseDuvidas.vue'
+import BaseFuncionarios from '@/views/BaseFuncionarios.vue'
 import DashBoardGraph from '@/views/DashBoardGraph.vue'
 
 const router = createRouter({
@@ -26,57 +26,47 @@ const router = createRouter({
       path: '/chatbot',
       name: 'chatbot',
       component: ChatBotNovo,
-      meta: { requiresAuth: true, roles: ['admin', 'atendente'] },
+      meta: { requiresAuth: true, roles: [1, 2] },
     },
     {
       path: '/basedeconhecimento',
       name: 'basedeconhecimento',
       component: BaseDeConhecimento,
-      meta: { requiresAuth: true, roles: ['admin'] },
+      meta: { requiresAuth: true, roles: [1] },
     },
     {
       path: '/basededuvidas',
       name: 'basededuvidas',
       component: BaseDuvidas,
-      meta: { requiresAuth: true, roles: ['admin'] },
+      meta: { requiresAuth: true, roles: [1] },
     },
     {
       path: '/basedefuncionarios',
       name: 'basedefuncionarios',
       component: BaseFuncionarios,
-      meta: { requiresAuth: true, roles: ['admin'] },
+      meta: { requiresAuth: true, roles: [1] },
     },
     {
       path: '/dashboard',
       name: 'dashboard',
       component: DashBoardGraph,
-      meta: { requiresAuth: true, roles: ['admin'] },
+      meta: { requiresAuth: true, roles: [1] },
     },
   ],
 })
 
 router.beforeEach((to, from, next) => {
-  const token = 'aa'
-  // const user = { name: 'João', role: 'teste' }
-  // const userRole = user?.role
-
   const auth = useAuthStore()
   const requiresAuth = to.meta.requiresAuth as boolean | undefined
-  const allowedRoles = to.meta.roles as string[] | undefined
+  const allowedRoles = to.meta.roles as number[] | undefined
 
   if (requiresAuth && !auth.isLoggedIn) {
     // Não está logado, redireciona para home
     return next({ path: '/' })
   }
 
-  if (allowedRoles && !allowedRoles.includes(auth.roles)) {
-    // Papel não permitido
-    return next({ path: '/chatbot' })
-  }
-
-  if (requiresAuth && !token) {
-    // Não está logado
-    return next({ name: 'Login' })
+  if (allowedRoles && !allowedRoles.includes(auth.perfilId)) {
+    return next({ path: '/naoautorizado' })
   }
 
   next()
