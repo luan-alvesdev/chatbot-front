@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { cadastrar } from '../services/cadastro';
+import { cadastrar } from '../services/user/cadastro';
+import { handleAxiosError } from '../utils/handleAxiosError';
 
 const emit = defineEmits(['voltar'])
 
@@ -19,6 +20,7 @@ const cpfCadastroError = ref('')
 const emailCadastroError = ref('')
 const senhaCadastroError = ref('')
 const cargoCadastroError = ref('')
+const servidorCadastroError = ref('')
 
 function validarCadastro() {
     nomeCadastroError.value = ''
@@ -56,10 +58,9 @@ async function realizarCadastro() {
             senhaCadastro.value = ''
             cargoCadastro.value = ''
             enviarFeedback()
-        } catch
-        // (error) 
-        {
-            // tratar os erros aqui
+        } catch (error: unknown) {
+            const msg = handleAxiosError(error)
+            servidorCadastroError.value = msg
         }
     }
 }
@@ -115,6 +116,9 @@ function enviarFeedback() {
                 cargoCadastroError
                 }}</span>
             <div class="flex justify-between">
+                <span v-if="servidorCadastroError" class="text-red-500 text-xs mb-2 block">{{
+                    servidorCadastroError
+                }}</span>
                 <button type="button"
                     class="text-[0.9rem] px-4 py-2 rounded bg-green-700 text-white font-bold hover:bg-green-800"
                     @click="realizarCadastro">Cadastrar</button>

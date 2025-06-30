@@ -16,6 +16,7 @@ onMounted(() => window.addEventListener('resize', handleResize))
 onUnmounted(() => window.removeEventListener('resize', handleResize))
 
 function realizarLogout() {
+  localStorage.removeItem('token')
   auth.logout()
   showSidebar.value = false
   router.push('/')

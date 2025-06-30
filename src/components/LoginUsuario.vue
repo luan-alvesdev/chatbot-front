@@ -3,7 +3,8 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/autenticacao'
 // import axios from 'axios'
-import { login } from '../services/login'
+import { login } from '../services/user/login'
+import { handleAxiosError } from '../utils/handleAxiosError'
 
 const emits = defineEmits(['abrirCadastro', 'abrirRecuperar'])
 const router = useRouter()
@@ -13,6 +14,7 @@ const email = ref('')
 const senha = ref('')
 const emailError = ref('')
 const senhaError = ref('')
+const servidorCadastroError = ref('')
 
 function validarLogin() {
     emailError.value = ''
@@ -30,21 +32,24 @@ async function realizarLogin() {
             email: email.value,
             senha: senha.value,
         })
-        console.log('DADOS DO BACKEND:', response.data, response.data.aprovado)
+        // console.log('DADOS DO BACKEND:', response.data, response.data.aprovado)
         if (!response.data.aprovado) {
             emailError.value = 'Seu cadastro ainda não foi aprovado.';
             senhaError.value = '';
             return
         }
+        if (response.data.token) {
+            localStorage.setItem('token', response.data.token) // salvando jwt no localstorage
+        }
         // Salva o perfil_id no store
-        auth.login(response.data.perfil_id)
+        auth.login(Number(response.data.perfilId))
         router.push('/chatbot')
-    } catch (error) {
-        const msg = error.response?.data?.error || 'E-mail ou senha inválidos'
-        emailError.value = msg
-        senhaError.value = msg
+    } catch (error: unknown) {
+        const msg = handleAxiosError(error)
+        servidorCadastroError.value = msg
     }
 }
+
 </script>
 
 <template>
@@ -63,6 +68,9 @@ async function realizarLogin() {
                 autocomplete="current-password" v-model="senha" />
             <span v-if="senhaError" class="text-red-500 text-xs mb-2 block">{{ senhaError
             }}</span>
+            <span v-if="servidorCadastroError" class="text-red-500 text-xs mb-2 block">{{
+                servidorCadastroError
+                }}</span>
             <div class="flex items-center justify-between">
                 <button class="text-[0.9rem] px-4 py-2 rounded bg-green-700 text-white font-bold hover:bg-green-800"
                     @click="realizarLogin">Entrar</button>
