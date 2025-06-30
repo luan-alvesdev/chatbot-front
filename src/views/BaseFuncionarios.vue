@@ -86,10 +86,7 @@ async function saveEdit(row: Funcionario) {
                 nome: editRow.value.nome,
                 email: editRow.value.email,
                 // cpf: editRow.value.cpf, // descomente se usar CPF
-                perfil: {
-                    nomePerfil: editRow.value.perfil.nomePerfil,
-                    perfilId: editRow.value.perfil.perfilId
-                }
+                perfilId: editRow.value.perfil.perfilId
             },
             {
                 headers: {
@@ -229,7 +226,17 @@ async function removerFuncionario(usuarioId: number, pendente: boolean) {
                         <tr v-for="c in dadosFuncionariosComPendentes" :key="c.usuarioId"
                             :class="['border-t', c.pendente ? 'bg-red-100' : '']">
                             <!-- <td class="px-4 py-2">{{ c.usuarioId }}</td> -->
-                            <td class="px-4 py-2">{{ cargoFromPerfil(c.perfil.perfilId) }}</td>
+                            <td class="px-4 py-2">
+                                <template v-if="editingId === c.usuarioId && !c.pendente">
+                                    <select v-model="editRow.perfil.perfilId" class="border rounded px-2 py-1 w-full">
+                                        <option :value="1">Admin</option>
+                                        <option :value="2">Atendente</option>
+                                    </select>
+                                </template>
+                                <template v-else>
+                                    {{ cargoFromPerfil(c.perfil.perfilId) }}
+                                </template>
+                            </td>
                             <td class="px-4 py-2">
                                 <template v-if="editingId === c.usuarioId && !c.pendente">
                                     <input v-model="editRow.nome" class="border rounded px-2 py-1 w-full" />
@@ -293,7 +300,16 @@ async function removerFuncionario(usuarioId: number, pendente: boolean) {
                         <span class="font-bold text-green-900">ID:</span> {{ c.usuarioId }}
                     </div> -->
                     <div>
-                        <span class="font-bold text-green-900">Cargo:</span> {{ cargoFromPerfil(c.perfil.perfilId) }}
+                        <span class="font-bold text-green-900">Cargo:</span>
+                        <template v-if="editingId === c.usuarioId && !c.pendente">
+                            <select v-model="editRow.perfil.perfilId" class="border rounded px-2 py-1 w-full">
+                                <option :value="1">Admin</option>
+                                <option :value="2">Atendente</option>
+                            </select>
+                        </template>
+                        <template v-else>
+                            {{ cargoFromPerfil(c.perfil.perfilId) }}
+                        </template>
                     </div>
                     <div>
                         <span class="font-bold text-green-900">Nome:</span>
